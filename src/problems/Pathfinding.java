@@ -66,7 +66,7 @@ public class Pathfinding implements Problem {
     private void solveDFS() {
 
         DFS dfs = new DFS();
-        ArrayList<Node> pathNodes = dfs.graphDepthLimitedSearch(this);
+        ArrayList<Node> pathNodes = dfs.graphDFS(this);
 
         ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
         for (Node n:pathNodes){
