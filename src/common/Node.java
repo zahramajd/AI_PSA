@@ -9,16 +9,16 @@ public class Node {
 
     public Node parent;
     public int state;
-    private int pathcost=0;
+    private float pathcost=0;
     public ArrayList<Integer> actions;
 
     public float f=0;
 
-    public int getPathcost() {
+    public float getPathcost() {
         return pathcost;
     }
 
-    public void setPathcost(int pathcost) {
+    public void setPathcost(float pathcost) {
         this.pathcost = pathcost;
     }
 }

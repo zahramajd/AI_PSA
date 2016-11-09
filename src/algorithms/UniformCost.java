@@ -27,14 +27,24 @@ public class UniformCost {
     }
 
     public ArrayList<Node> solution(Node node) {
-        // TODO: return arraylist
         ArrayList<Node> path = new ArrayList<>();
+
+        while (node != null) {
+            path.add(node);
+            node = node.parent;
+        }
+
         return path;
     }
 
     public ArrayList<Node> graphUniformCost(Problem problem) {
 
-        Node node = problem.initialState;
+
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+        Node node = initialNode;
         if (problem.goal_test(node.state))
             return solution(node);
 
@@ -85,7 +95,11 @@ public class UniformCost {
 
     public ArrayList<Node> treeUniformCost(Problem problem) {
 
-        Node node = problem.initialState;
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+        Node node = initialNode;
         if (problem.goal_test(node.state))
             return solution(node);
 

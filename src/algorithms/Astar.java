@@ -16,7 +16,11 @@ public class Astar {
 
     public ArrayList<Node> graphAstar(Problem problem) {
 
-        frontier.add(problem.initialState);
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+        frontier.add(initialNode);
         while (frontier.size() > 0) {
             Node q = find_least_f(frontier);
             frontier.remove(q);
@@ -25,10 +29,10 @@ public class Astar {
 
                 Node child = PSA.child_node(problem, q, problem.actions(q.state).get(i));
 
-                if (problem.goal_test(child.state)) ;
-                return solution(child);
+                if (problem.goal_test(child.state))
+                    return solution(child);
 
-                child.setPathcost(q.getPathcost() + problem.step_cost(q.state, child.state));
+                child.setPathcost((int) (q.getPathcost() + problem.step_cost(q.state, child.state)));
                 child.f = child.getPathcost() + problem.heuristic(child.state);
 
 
@@ -54,8 +58,13 @@ public class Astar {
     }
 
     public ArrayList<Node> solution(Node node) {
-        // TODO: return arraylist
         ArrayList<Node> path = new ArrayList<>();
+
+        while (node != null) {
+            path.add(node);
+            node = node.parent;
+        }
+
         return path;
     }
 

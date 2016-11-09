@@ -13,19 +13,27 @@ import java.util.Queue;
  */
 public class BFS {
 
-//    public Queue<Node> frontier;
-//    public Queue<Node> explored;
-
 
     public ArrayList<Node> solution(Node node) {
-        // TODO: return arraylist
+
         ArrayList<Node> path = new ArrayList<>();
+
+        while (node != null) {
+            path.add(node);
+            node = node.parent;
+        }
+
         return path;
     }
 
     public ArrayList<Node> graphBFS(Problem problem) {
 
-        Node initialNode = problem.initialState;
+//        Node initialNode = problem.initialState;
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+
         if (problem.goal_test(initialNode.state))
             return solution(initialNode);
 
@@ -75,7 +83,12 @@ public class BFS {
 
     public ArrayList<Node> treeBFS(Problem problem) {
 
-        Node node = problem.initialState;
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+
+        Node node = initialNode;
         if (problem.goal_test(node.state))
             return solution(node);
 

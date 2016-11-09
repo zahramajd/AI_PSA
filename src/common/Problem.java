@@ -7,12 +7,16 @@ import java.util.ArrayList;
  */
 public interface Problem {
 
-    public Node initialState=null;
+    int initialState =0;
 
-    public boolean goal_test(int state);
-    public ArrayList<Integer> actions(int state);
-    public int result(int state,int actions);
-    public float step_cost(int state1,int state2);
-    public float heuristic(int state);
+    boolean goal_test(int state);
+
+    ArrayList<Integer> actions(int state);
+
+    int result(int state, int actions);
+
+    float step_cost(int state1, int state2);
+
+    float heuristic(int state);
 
 }

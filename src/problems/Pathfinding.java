@@ -1,5 +1,8 @@
 package problems;
 
+import algorithms.BFS;
+import algorithms.DFS;
+import common.Node;
 import common.Problem;
 
 import java.util.ArrayList;
@@ -7,15 +10,12 @@ import java.util.ArrayList;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 
-/**
- * Created by zahra on 11/2/2016 AD.
- */
+
 public class Pathfinding implements Problem {
 
 
     // actions
     // 1:up  2:right 3:down 4:left
-
 
     Coordinate source;
     Coordinate destination;
@@ -31,6 +31,8 @@ public class Pathfinding implements Problem {
         // TODO : get from user
         // TODO : get obstacles
         this.source = new Coordinate(1, 1);
+        source.state=0;
+
         this.destination = new Coordinate(m, n);
         this.m = m;
         this.n = n;
@@ -41,6 +43,31 @@ public class Pathfinding implements Problem {
         states.add(destination);
 
         obstacles = new ArrayList<>();
+
+    }
+
+    public void solve(String alg) {
+        switch (alg) {
+            case "dfs":
+                this.solveBFS();
+                break;
+
+        }
+
+    }
+
+    private void solveBFS() {
+
+        BFS bfs = new BFS();
+        ArrayList<Node> pathNodes = bfs.treeBFS(this);
+        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
+        for (Node n:pathNodes){
+            for (Coordinate c:states){
+                if (c.state==n.state)
+                    pathCoordinate.add(c);
+            }
+        }
+
 
     }
 
@@ -63,7 +90,7 @@ public class Pathfinding implements Problem {
                 return find_possible_actions(c);
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -153,11 +180,19 @@ public class Pathfinding implements Problem {
                 break;
         }
 
+        boolean isExist = false;
         for (Coordinate co : states) {
-            if ((co.x == xResult) && (co.y == yResult))
+            if ((co.x == xResult) && (co.y == yResult)) {
+                isExist = true;
                 return co.state;
+            }
         }
 
+        if (!isExist) {
+            Coordinate newC = new Coordinate(xResult, yResult);
+            states.add(newC);
+            return newC.state;
+        }
         return -1;
     }
 }

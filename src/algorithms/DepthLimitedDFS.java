@@ -16,8 +16,13 @@ public class DepthLimitedDFS {
 
 
     public ArrayList<Node> solution(Node node) {
-        // TODO: return arraylist
         ArrayList<Node> path = new ArrayList<>();
+
+        while (node != null) {
+            path.add(node);
+            node = node.parent;
+        }
+
         return path;
     }
 
@@ -26,7 +31,11 @@ public class DepthLimitedDFS {
 
     public ArrayList<Node> treeDepthLimitedSearch(Problem problem, int limit) {
 
-        return recursiveDLS(problem.initialState, problem, limit);
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+        return recursiveDLS(initialNode, problem, limit);
     }
 
 
@@ -65,7 +74,11 @@ public class DepthLimitedDFS {
 
     public ArrayList<Node> graphDepthLimitedSearch(Problem problem, int limit) {
 
-        return graphRecursiveDLS(problem.initialState, problem, limit);
+        Node initialNode=new Node();
+        initialNode.parent=null;
+        initialNode.state=0;
+
+        return graphRecursiveDLS(initialNode, problem, limit);
     }
 
 

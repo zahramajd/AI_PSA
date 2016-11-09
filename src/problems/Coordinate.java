@@ -10,6 +10,7 @@ public class Coordinate {
     int y;
 
     public Coordinate(int x,int y){
+        this.state=100*x+y;
         this.x=x;
         this.y=y;
     }
