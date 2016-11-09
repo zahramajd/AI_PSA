@@ -2,6 +2,7 @@ package problems;
 
 import algorithms.BFS;
 import algorithms.DFS;
+import algorithms.UniformCost;
 import common.Node;
 import common.Problem;
 
@@ -49,27 +50,52 @@ public class Pathfinding implements Problem {
     public void solve(String alg) {
         switch (alg) {
             case "dfs":
-                this.solveBFS();
+                this.solveDFS();
                 break;
-
+            case "uc":
+                this.solveUC();
+                break;
         }
 
     }
 
-    private void solveBFS() {
+    private void solveDFS() {
 
-        BFS bfs = new BFS();
-        ArrayList<Node> pathNodes = bfs.treeBFS(this);
+        DFS dfs = new DFS();
+        ArrayList<Node> pathNodes = dfs.graphDepthLimitedSearch(this);
+
         ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
         for (Node n:pathNodes){
             for (Coordinate c:states){
                 if (c.state==n.state)
-                    pathCoordinate.add(c);
+                    pathCoordinate.add(0,c);
             }
         }
 
+        for(Coordinate c:pathCoordinate){
+            System.out.println(c);
+        }
+    }
+
+    private void solveUC() {
+
+        UniformCost uc = new UniformCost();
+        ArrayList<Node> pathNodes = uc.graphUniformCost(this);
+
+        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
+        for (Node n:pathNodes){
+            for (Coordinate c:states){
+                if (c.state==n.state)
+                    pathCoordinate.add(0,c);
+            }
+        }
+
+        for(Coordinate c:pathCoordinate){
+            System.out.println(c);
+        }
 
     }
+
 
     @Override
     public boolean goal_test(int state) {
@@ -108,7 +134,7 @@ public class Pathfinding implements Problem {
     @Override
     public float step_cost(int state1, int state2) {
 
-        // TODO: distance should ask
+        // TODO: distance br should asked
         for (Coordinate c1 : states) {
             if (c1.state == state1) {
                 for (Coordinate c2 : states) {
