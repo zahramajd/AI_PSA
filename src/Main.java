@@ -18,7 +18,7 @@ public class Main {
 
         Pathfinding pf=new Pathfinding(m,n);
 
-        pf.solve("uc");
+        pf.solve("a");
 
 
     }

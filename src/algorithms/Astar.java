@@ -16,9 +16,9 @@ public class Astar {
 
     public ArrayList<Node> graphAstar(Problem problem) {
 
-        Node initialNode=new Node();
-        initialNode.parent=null;
-        initialNode.state=0;
+        Node initialNode = new Node();
+        initialNode.parent = null;
+        initialNode.state = 0;
 
         frontier.add(initialNode);
         while (frontier.size() > 0) {
@@ -58,6 +58,7 @@ public class Astar {
     }
 
     public ArrayList<Node> solution(Node node) {
+        System.out.println("sol");
         ArrayList<Node> path = new ArrayList<>();
 
         while (node != null) {
@@ -70,12 +71,17 @@ public class Astar {
 
     public Boolean checkDuplicate(ArrayList<Node> list, Node newChild) {
 
+        boolean isExist = false;
         for (Node n : list) {
             if (n.state == newChild.state) {
+                isExist = true;
                 if (newChild.f < n.f)
                     return true;
             }
         }
+        if (!isExist)
+            return true;
+
         return false;
     }
 

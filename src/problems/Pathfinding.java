@@ -1,5 +1,6 @@
 package problems;
 
+import algorithms.Astar;
 import algorithms.BFS;
 import algorithms.DFS;
 import algorithms.UniformCost;
@@ -55,6 +56,9 @@ public class Pathfinding implements Problem {
             case "uc":
                 this.solveUC();
                 break;
+            case "a":
+                this.solveA();
+                break;
         }
 
     }
@@ -96,6 +100,24 @@ public class Pathfinding implements Problem {
 
     }
 
+    private void solveA() {
+
+        Astar a = new Astar();
+        ArrayList<Node> pathNodes = a.graphAstar(this);
+
+        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
+        for (Node n:pathNodes){
+            for (Coordinate c:states){
+                if (c.state==n.state)
+                    pathCoordinate.add(0,c);
+            }
+        }
+
+        for(Coordinate c:pathCoordinate){
+            System.out.println(c);
+        }
+
+    }
 
     @Override
     public boolean goal_test(int state) {
