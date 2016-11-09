@@ -1,7 +1,6 @@
 package problems;
 
 import algorithms.Astar;
-import algorithms.BFS;
 import algorithms.DFS;
 import algorithms.UniformCost;
 import common.Node;
@@ -33,7 +32,7 @@ public class Pathfinding implements Problem {
         // TODO : get from user
         // TODO : get obstacles
         this.source = new Coordinate(1, 1);
-        source.state=0;
+        source.state = 0;
 
         this.destination = new Coordinate(m, n);
         this.m = m;
@@ -68,15 +67,15 @@ public class Pathfinding implements Problem {
         DFS dfs = new DFS();
         ArrayList<Node> pathNodes = dfs.graphDFS(this);
 
-        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
-        for (Node n:pathNodes){
-            for (Coordinate c:states){
-                if (c.state==n.state)
-                    pathCoordinate.add(0,c);
+        ArrayList<Coordinate> pathCoordinate = new ArrayList<>();
+        for (Node n : pathNodes) {
+            for (Coordinate c : states) {
+                if (c.state == n.state)
+                    pathCoordinate.add(0, c);
             }
         }
 
-        for(Coordinate c:pathCoordinate){
+        for (Coordinate c : pathCoordinate) {
             System.out.println(c);
         }
     }
@@ -86,15 +85,15 @@ public class Pathfinding implements Problem {
         UniformCost uc = new UniformCost();
         ArrayList<Node> pathNodes = uc.graphUniformCost(this);
 
-        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
-        for (Node n:pathNodes){
-            for (Coordinate c:states){
-                if (c.state==n.state)
-                    pathCoordinate.add(0,c);
+        ArrayList<Coordinate> pathCoordinate = new ArrayList<>();
+        for (Node n : pathNodes) {
+            for (Coordinate c : states) {
+                if (c.state == n.state)
+                    pathCoordinate.add(0, c);
             }
         }
 
-        for(Coordinate c:pathCoordinate){
+        for (Coordinate c : pathCoordinate) {
             System.out.println(c);
         }
 
@@ -105,15 +104,15 @@ public class Pathfinding implements Problem {
         Astar a = new Astar();
         ArrayList<Node> pathNodes = a.graphAstar(this);
 
-        ArrayList<Coordinate> pathCoordinate=new ArrayList<>();
-        for (Node n:pathNodes){
-            for (Coordinate c:states){
-                if (c.state==n.state)
-                    pathCoordinate.add(0,c);
+        ArrayList<Coordinate> pathCoordinate = new ArrayList<>();
+        for (Node n : pathNodes) {
+            for (Coordinate c : states) {
+                if (c.state == n.state)
+                    pathCoordinate.add(0, c);
             }
         }
 
-        for(Coordinate c:pathCoordinate){
+        for (Coordinate c : pathCoordinate) {
             System.out.println(c);
         }
 
@@ -122,10 +121,14 @@ public class Pathfinding implements Problem {
     @Override
     public boolean goal_test(int state) {
 
+        System.out.println("goal test");
+
         for (Coordinate c : states) {
-            if (c.state == state)
+            if (c.state == state) {
+                System.out.println("x : "+c.x+" y : "+c.y);
                 if ((c.x == destination.x) && (c.y == destination.y))
                     return true;
+            }
         }
         return false;
     }

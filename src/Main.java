@@ -16,6 +16,7 @@ public class Main {
        // System.out.println("n : ");
         int n=input.nextInt();
 
+        System.out.println(m);
         Pathfinding pf=new Pathfinding(m,n);
 
         pf.solve("uc");

@@ -45,6 +45,7 @@ public class DFS {
         Queue explored = new LinkedList<>();
 
         while (true) {
+            System.out.println("in while");
             if (frontier.size() == 0)
                 return null;
 

@@ -29,9 +29,9 @@ public class BFS {
     public ArrayList<Node> graphBFS(Problem problem) {
 
 //        Node initialNode = problem.initialState;
-        Node initialNode=new Node();
-        initialNode.parent=null;
-        initialNode.state=0;
+        Node initialNode = new Node();
+        initialNode.parent = null;
+        initialNode.state = 0;
 
 
         if (problem.goal_test(initialNode.state))
@@ -58,7 +58,7 @@ public class BFS {
                 boolean isExist = false;
 
                 for (Object n : frontier) {
-                    if ( ((Node) n).state == child.state)
+                    if (((Node) n).state == child.state)
                         isExist = true;
                 }
                 //
@@ -67,13 +67,13 @@ public class BFS {
                         isExist = true;
                 }
 
-                if(!isExist)
-                {
-                    if (problem.goal_test(child.state))
+                if (!isExist) {
+                    if (problem.goal_test(child.state)) {
                         return solution(child);
+                    } else {
+                        frontier.add(child);
+                    }
                 }
-
-                frontier.add(child);
 
             }
 
@@ -83,9 +83,9 @@ public class BFS {
 
     public ArrayList<Node> treeBFS(Problem problem) {
 
-        Node initialNode=new Node();
-        initialNode.parent=null;
-        initialNode.state=0;
+        Node initialNode = new Node();
+        initialNode.parent = null;
+        initialNode.state = 0;
 
 
         Node node = initialNode;
@@ -111,17 +111,18 @@ public class BFS {
                 boolean isExist = false;
 
                 for (Object n : frontier) {
-                    if ( ((Node) n).state == child.state)
+                    if (((Node) n).state == child.state)
                         isExist = true;
                 }
 
-                if(!isExist)
-                {
-                    if (problem.goal_test(child.state))
+                if (!isExist) {
+                    if (problem.goal_test(child.state)) {
                         return solution(child);
+                    } else {
+                        frontier.add(child);
+                    }
                 }
 
-                frontier.add(child);
 
             }
 

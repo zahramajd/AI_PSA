@@ -29,6 +29,7 @@ public class UniformCost {
     public ArrayList<Node> solution(Node node) {
         ArrayList<Node> path = new ArrayList<>();
 
+        System.out.println("soll");
         while (node != null) {
             path.add(node);
             node = node.parent;
@@ -40,9 +41,9 @@ public class UniformCost {
     public ArrayList<Node> graphUniformCost(Problem problem) {
 
 
-        Node initialNode=new Node();
-        initialNode.parent=null;
-        initialNode.state=0;
+        Node initialNode = new Node();
+        initialNode.parent = null;
+        initialNode.state = 0;
 
         Node node = initialNode;
         if (problem.goal_test(node.state))
@@ -50,12 +51,13 @@ public class UniformCost {
 
 
         Comparator<Node> comparator = new PathComparator();
-        PriorityQueue frontier = new PriorityQueue<Node>(10,comparator);
+        PriorityQueue frontier = new PriorityQueue<Node>(10, comparator);
         frontier.add(node);
 
         Queue explored = new LinkedList<>();
 
         while (true) {
+
             if (frontier.size() == 0)
                 return null;
 
@@ -63,6 +65,7 @@ public class UniformCost {
             explored.add(node);
 
             for (int i = 0; i < problem.actions(node.state).size(); i++) {
+
                 Node child = PSA.child_node(problem, node, problem.actions(node.state).get(i));
 
 
@@ -73,6 +76,7 @@ public class UniformCost {
                     if (((Node) n).state == child.state)
                         isExist = true;
                 }
+
                 //
                 for (Object m : explored) {
                     if (((Node) m).state == child.state)
@@ -80,12 +84,13 @@ public class UniformCost {
                 }
 
                 if (!isExist) {
-                    if (problem.goal_test(child.state))
+                    if (problem.goal_test(child.state)) {
                         return solution(child);
+                    } else {
+                        frontier.add(child);
+                    }
                 }
 
-                // Insert & check
-                frontier.add(child);
 
             }
 
@@ -95,9 +100,9 @@ public class UniformCost {
 
     public ArrayList<Node> treeUniformCost(Problem problem) {
 
-        Node initialNode=new Node();
-        initialNode.parent=null;
-        initialNode.state=0;
+        Node initialNode = new Node();
+        initialNode.parent = null;
+        initialNode.state = 0;
 
         Node node = initialNode;
         if (problem.goal_test(node.state))
@@ -105,7 +110,7 @@ public class UniformCost {
 
 
         Comparator<Node> comparator = new PathComparator();
-        PriorityQueue frontier = new PriorityQueue<Node>(10,comparator);
+        PriorityQueue frontier = new PriorityQueue<Node>(10, comparator);
         frontier.add(node);
 
         Queue explored = new LinkedList<>();
@@ -129,12 +134,12 @@ public class UniformCost {
                 }
 
                 if (!isExist) {
-                    if (problem.goal_test(child.state))
+                    if (problem.goal_test(child.state)) {
                         return solution(child);
+                    } else {
+                        frontier.add(child);
+                    }
                 }
-
-                // Insert & check
-                frontier.add(child);
 
             }
 
