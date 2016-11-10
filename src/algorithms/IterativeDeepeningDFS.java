@@ -18,8 +18,8 @@ public class IterativeDeepeningDFS {
 
         for (int depth = 0; depth < 1000; depth++) {
 
-            DepthLimitedDFS ddfs = new DepthLimitedDFS();
-            result = ddfs.graphDepthLimitedSearch(problem, depth);
+            LDFS ddfs = new LDFS();
+            result = ddfs.graphDFS(problem,depth);
             if (result == null)
                 return result;
             if (result.size() > 0)
@@ -32,8 +32,8 @@ public class IterativeDeepeningDFS {
 
         for (int depth = 0; depth < 1000; depth++) {
 
-            DepthLimitedDFS ddfs = new DepthLimitedDFS();
-            result = ddfs.treeDepthLimitedSearch(problem, depth);
+            LDFS ddfs = new LDFS();
+            result = ddfs.treeDFS(problem, depth);
             if (result == null)
                 return result;
             if (result.size() > 0)

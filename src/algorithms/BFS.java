@@ -56,10 +56,10 @@ public class BFS {
                 // existence in f & e
                 boolean isExist = false;
 
-                for (Object n : frontier) {
+                for (Object n : frontier)
                     if (((Node) n).state == child.state)
                         isExist = true;
-                }
+
                 //
                 for (Object m : explored) {
                     if (((Node) m).state == child.state)

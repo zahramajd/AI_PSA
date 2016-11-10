@@ -13,7 +13,6 @@ public class ChessState {
 
     public ChessState() {
         this.state = _state_start++;
-        System.out.println(this.state);
         for (int i = 0; i < 8; i++)
             queens[i] = i;
     }

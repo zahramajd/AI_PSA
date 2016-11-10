@@ -2,7 +2,8 @@ package problems.Chess;
 
 import algorithms.Astar;
 import algorithms.BFS;
-import algorithms.DepthLimitedDFS;
+import algorithms.DFS;
+import algorithms.LDFS;
 import common.Node;
 import common.Problem;
 
@@ -38,6 +39,9 @@ public class EightQueens implements Problem {
             case "ldfs":
                 this.solveLDFS();
                 break;
+            case "dfs":
+                this.solveDFS();
+                break;
             case "a":
                 this.solveA();
                 break;
@@ -46,18 +50,18 @@ public class EightQueens implements Problem {
     }
 
     private void solveBFS() {
-
         BFS bfs = new BFS();
         ArrayList<Node> pathNodes = bfs.treeBFS(this);
-
-
-
     }
 
     private void solveLDFS() {
+        LDFS ldfs = new LDFS();
+        ArrayList<Node> pathNodes = ldfs.graphDFS(this, 8);
+    }
 
-        DepthLimitedDFS ldfs = new DepthLimitedDFS();
-        ArrayList<Node> pathNodes = ldfs.graphDepthLimitedSearch(this, 8);
+    private void solveDFS() {
+        DFS dfs = new DFS();
+        ArrayList<Node> pathNodes = dfs.graphDFS(this);
     }
 
     private void solveA() {
@@ -112,8 +116,34 @@ public class EightQueens implements Problem {
 
     @Override
     public float heuristic(int state) {
-        // TODO: heuristic
 
+        ChessState cc=null;
+        for (ChessState c : chessStates) {
+            if (c.state == state) {
+                cc=c;
+                break;
+            }
+        }
+
+        if(cc==null)
+            return Integer.MAX_VALUE;
+
+        int counter=0;
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = i + 1; j < 8; j++) {
+                if (cc.queens[i] == cc.queens[j])
+                    counter++;
+                else if (Math.abs(cc.queens[i] - cc.queens[j]) == j - i)
+                    counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    @Override
+    public int getGoalState() {
         return 0;
     }
 

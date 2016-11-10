@@ -19,4 +19,6 @@ public interface Problem {
 
     float heuristic(int state);
 
+    int getGoalState();
+
 }

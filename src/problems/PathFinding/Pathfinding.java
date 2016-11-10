@@ -1,6 +1,7 @@
 package problems.PathFinding;
 
 import algorithms.Astar;
+import algorithms.Bidirectional;
 import algorithms.DFS;
 import algorithms.UniformCost;
 import common.Node;
@@ -60,8 +61,8 @@ public class Pathfinding implements Problem {
             case "a":
                 this.solveA();
                 break;
-            case "bi":
-                this.solveBi();
+            case "bd":
+                this.solveBD();
                 break;
         }
 
@@ -123,7 +124,23 @@ public class Pathfinding implements Problem {
 
     }
 
-    private void solveBi() {
+    private void solveBD() {
+
+        Bidirectional b = new Bidirectional();
+        ArrayList<Node> pathNodes = b.graphBD(this);
+
+        ArrayList<Coordinate> pathCoordinate = new ArrayList<>();
+        for (Node n : pathNodes) {
+            for (Coordinate c : states) {
+                if (c.state == n.state)
+                    pathCoordinate.add(0, c);
+            }
+        }
+
+        for (Coordinate c : pathCoordinate) {
+            System.out.println(c);
+        }
+
     }
 
     @Override
@@ -167,7 +184,7 @@ public class Pathfinding implements Problem {
     @Override
     public float step_cost(int state1, int state2) {
 
-        // TODO: distance br should asked
+
         for (Coordinate c1 : states) {
             if (c1.state == state1) {
                 for (Coordinate c2 : states) {
@@ -187,6 +204,11 @@ public class Pathfinding implements Problem {
                 return (float) ((float) pow(abs(c.getX() - n), 2) + pow(abs(c.getY() - m), 2));
         }
         return 0;
+    }
+
+    @Override
+    public int getGoalState() {
+        return destination.state;
     }
 
 
