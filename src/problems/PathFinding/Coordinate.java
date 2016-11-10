@@ -9,19 +9,19 @@ public class Coordinate {
     private int x;
     private int y;
 
-    public Coordinate(int x,int y){
-        this.state=100*x+y;
+    public Coordinate(int x, int y) {
+        this.state = 100 * x + y;
         this.setX(x);
         this.setY(y);
     }
 
-    public Coordinate(){
+    public Coordinate() {
 
     }
 
     @Override
     public String toString() {
-        return getX() +","+ getY();
+        return getX() + "," + getY();
     }
 
     public int getX() {
@@ -38,5 +38,11 @@ public class Coordinate {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Coordinate c = (Coordinate) obj;
+        return this.x == c.x && this.y == c.y;
     }
 }

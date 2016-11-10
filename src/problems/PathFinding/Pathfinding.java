@@ -31,7 +31,7 @@ public class Pathfinding implements Problem {
     //
     int m, n;
 
-    public Pathfinding(int m, int n) {
+    public Pathfinding(int m, int n, ArrayList<Obstacle> obstacles) {
 
         // TODO : get obstacles
         this.source = new Coordinate(1, 1);
@@ -46,7 +46,7 @@ public class Pathfinding implements Problem {
         states.add(source);
         states.add(destination);
 
-        obstacles = new ArrayList<>();
+        this.obstacles = obstacles;
 
     }
 
@@ -105,6 +105,39 @@ public class Pathfinding implements Problem {
 
     }
 
+
+    class Cell {
+
+        Integer value;
+        boolean a, b, c, d;
+
+        Cell(Integer value, boolean a, boolean b, boolean c, boolean d) {
+            this.value = value;
+            this.a = a;
+            this.b = b;
+            this.c = c;
+            this.d = d;
+        }
+
+        public String top() {
+            return a ? "__" : "  ";
+        }
+
+        @Override
+        public String toString() {
+            return (value == null ? "." : value) + (b ? "|" : " ");
+        }
+    }
+
+    boolean checkObs(Coordinate from, Coordinate to) {
+        for (Obstacle o : obstacles) {
+            if ((o.a.getX() == from.getX() && o.a.getY() == from.getY() && o.b.getX() == to.getX() && o.b.getY() == to.getY()) ||
+                    (o.a.getX() == to.getX() && o.a.getY() == to.getY() && o.b.getX() == from.getX() && o.b.getY() == from.getY()))
+                return true;
+        }
+        return false;
+    }
+
     private void solveA() {
 
         Astar a = new Astar();
@@ -118,9 +151,33 @@ public class Pathfinding implements Problem {
             }
         }
 
-        for (Coordinate c : pathCoordinate) {
-            System.out.println(c);
+        Cell[][] map = new Cell[this.n][this.m];
+
+        for (int i = 1; i <= this.n; i++) {
+            for (int j = 1; j <= this.m; j++) {
+                boolean da = checkObs(new Coordinate(j,i), new Coordinate(j, i - 1));
+                boolean db = checkObs(new Coordinate(j,i), new Coordinate(j + 1, i));
+                boolean dc = checkObs(new Coordinate(j,i), new Coordinate(j, i + 1));
+                boolean dd = checkObs(new Coordinate(j,i), new Coordinate(j - 1, i));
+                map[i - 1][j - 1] = new Cell(null, da, db, dc, dd);
+            }
         }
+
+        int s = 0;
+        for (Coordinate c : pathCoordinate) {
+            map[c.getX() - 1][c.getY() - 1].value = s++;
+        }
+
+        System.out.println("-----------------------------");
+
+        for (int i = 0; i < this.n; i++) {
+            for (int j = 0; j < this.m; j++)
+                System.out.print(map[i][j]);
+
+            System.out.print("\r\n");
+        }
+
+        System.out.println("-----------------------------");
 
     }
 
@@ -306,8 +363,11 @@ public class Pathfinding implements Problem {
         }
 
         for (Obstacle o : obstacles) {
-            if ((o.a.getX() == from.getX() && o.a.getY() == from.getY() && o.b.getX() == to.getX() && o.b.getY() == to.getY()) ||
-                    (o.a.getX() == to.getX() && o.a.getY() == to.getY() && o.b.getX() == from.getX() && o.b.getY() == from.getY()))
+
+            if(o.a.equals(from) && o.b.equals(to))
+                return true;
+
+            if(o.a.equals(to) && o.b.equals(from))
                 return true;
 
         }
