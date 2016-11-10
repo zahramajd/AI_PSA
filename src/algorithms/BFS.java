@@ -28,7 +28,6 @@ public class BFS {
 
     public ArrayList<Node> graphBFS(Problem problem) {
 
-//        Node initialNode = problem.initialState;
         Node initialNode = new Node();
         initialNode.parent = null;
         initialNode.state = 0;
@@ -98,6 +97,7 @@ public class BFS {
 
 
         while (true) {
+            //System.out.println("in while");
             if (frontier.size() == 0)
                 return null;
 

@@ -9,9 +9,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-/**
- * Created by zahra on 11/2/2016 AD.
- */
+
 public class DFS {
 
 
@@ -29,58 +27,26 @@ public class DFS {
 
     public ArrayList<Node> graphDFS(Problem problem) {
 
-//        Node initialNode = problem.initialState;
         Node initialNode=new Node();
         initialNode.parent=null;
         initialNode.state=0;
 
+        return recursiveGraphDFS(initialNode,problem);
+    }
 
-        if (problem.goal_test(initialNode.state))
-            return solution(initialNode);
+    private ArrayList<Node> recursiveGraphDFS(Node node,Problem problem){
+
+        if (problem.goal_test(node.state))
+            return solution(node);
 
 
-        Stack frontier = new Stack();
-        frontier.add(initialNode);
+        for (int i = 0; i < problem.actions(node.state).size(); i++) {
 
-        Queue explored = new LinkedList<>();
+            Node child = PSA.child_node(problem, node, problem.actions(node.state).get(i));
 
-        while (true) {
-            System.out.println("in while");
-            if (frontier.size() == 0)
-                return null;
-
-            Node node = (Node) frontier.pop();
-            explored.add(node);
-
-            for (int i = 0; i < problem.actions(node.state).size(); i++) {
-
-                Node child = PSA.child_node(problem, node, problem.actions(node.state).get(i));
-
-                // existence in f & e
-                boolean isExist = false;
-
-                for (Object n : frontier) {
-                    if ( ((Node) n).state == child.state)
-                        isExist = true;
-                }
-                //
-                for (Object m : explored) {
-                    if (((Node) m).state == child.state)
-                        isExist = true;
-                }
-
-                if(!isExist)
-                {
-                    if (problem.goal_test(child.state))
-                        return solution(child);
-                }
-
-                frontier.add(child);
-
-            }
-
+           return recursiveGraphDFS(child,problem);
         }
-
+        return null;
     }
 
     public ArrayList<Node> treeDFS(Problem problem) {

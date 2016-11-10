@@ -1,4 +1,4 @@
-package problems;
+package problems.PathFinding;
 
 import algorithms.Astar;
 import algorithms.DFS;
@@ -23,13 +23,15 @@ public class Pathfinding implements Problem {
 
     // array of states
     ArrayList<Coordinate> states;
-    ArrayList<Coordinate> obstacles;
+
+    // array of obstacles
+    ArrayList<Obstacle> obstacles;
 
     //
     int m, n;
 
     public Pathfinding(int m, int n) {
-        // TODO : get from user
+
         // TODO : get obstacles
         this.source = new Coordinate(1, 1);
         source.state = 0;
@@ -57,6 +59,9 @@ public class Pathfinding implements Problem {
                 break;
             case "a":
                 this.solveA();
+                break;
+            case "bi":
+                this.solveBi();
                 break;
         }
 
@@ -118,6 +123,9 @@ public class Pathfinding implements Problem {
 
     }
 
+    private void solveBi() {
+    }
+
     @Override
     public boolean goal_test(int state) {
 
@@ -125,8 +133,8 @@ public class Pathfinding implements Problem {
 
         for (Coordinate c : states) {
             if (c.state == state) {
-                System.out.println("x : "+c.x+" y : "+c.y);
-                if ((c.x == destination.x) && (c.y == destination.y))
+                System.out.println("x : " + c.getX() + " y : " + c.getY());
+                if ((c.getX() == destination.getX()) && (c.getY() == destination.getY()))
                     return true;
             }
         }
@@ -164,7 +172,7 @@ public class Pathfinding implements Problem {
             if (c1.state == state1) {
                 for (Coordinate c2 : states) {
                     if (c2.state == state2)
-                        return (float) ((float) pow(abs(c1.x - c2.x), 2) + pow(abs(c1.y - c2.y), 2));
+                        return (float) ((float) pow(abs(c1.getX() - c2.getX()), 2) + pow(abs(c1.getY() - c2.getY()), 2));
                 }
             }
         }
@@ -176,7 +184,7 @@ public class Pathfinding implements Problem {
 
         for (Coordinate c : states) {
             if (c.state == state)
-                return (float) ((float) pow(abs(c.x - n), 2) + pow(abs(c.y - m), 2));
+                return (float) ((float) pow(abs(c.getX() - n), 2) + pow(abs(c.getY() - m), 2));
         }
         return 0;
     }
@@ -187,16 +195,16 @@ public class Pathfinding implements Problem {
         // TODO: obstacles
         ArrayList<Integer> possibleActions = new ArrayList<>();
         // check up
-        if (c.y >= 2)
+        if ((c.getY() >= 2) && !check_obstacles(c, 1))
             possibleActions.add(new Integer(1));
         // check right
-        if (c.x < n)
+        if ((c.getX() < n) && !check_obstacles(c, 2))
             possibleActions.add(new Integer(2));
         // check down
-        if (c.y < m)
+        if ((c.getY() < m) && !check_obstacles(c, 3))
             possibleActions.add(new Integer(3));
         // check left
-        if (c.x >= 2)
+        if ((c.getX() >= 2) && !check_obstacles(c, 4))
             possibleActions.add(new Integer(4));
 
 
@@ -211,29 +219,29 @@ public class Pathfinding implements Problem {
         switch (action) {
             // up
             case 1:
-                xResult = c.x;
-                yResult = c.y - 1;
+                xResult = c.getX();
+                yResult = c.getY() - 1;
                 break;
             // right
             case 2:
-                xResult = c.x + 1;
-                yResult = c.y;
+                xResult = c.getX() + 1;
+                yResult = c.getY();
                 break;
             // down
             case 3:
-                xResult = c.x;
-                yResult = c.y + 1;
+                xResult = c.getX();
+                yResult = c.getY() + 1;
                 break;
             // left
             case 4:
-                xResult = c.x - 1;
-                yResult = c.y;
+                xResult = c.getX() - 1;
+                yResult = c.getY();
                 break;
         }
 
         boolean isExist = false;
         for (Coordinate co : states) {
-            if ((co.x == xResult) && (co.y == yResult)) {
+            if ((co.getX() == xResult) && (co.getY() == yResult)) {
                 isExist = true;
                 return co.state;
             }
@@ -245,5 +253,43 @@ public class Pathfinding implements Problem {
             return newC.state;
         }
         return -1;
+    }
+
+    public boolean check_obstacles(Coordinate from, int action) {
+
+
+        Coordinate to = new Coordinate();
+
+        switch (action) {
+            // up
+            case 1:
+                to.setX(from.getX());
+                to.setY(from.getY() - 1);
+                break;
+            // right
+            case 2:
+                to.setX(from.getX() + 1);
+                to.setY(from.getY());
+                break;
+            // down
+            case 3:
+                to.setX(from.getX());
+                to.setY(from.getY() + 1);
+                break;
+            // left
+            case 4:
+                to.setX(from.getX() - 1);
+                to.setY(from.getY());
+                break;
+        }
+
+        for (Obstacle o : obstacles) {
+            if ((o.a.getX() == from.getX() && o.a.getY() == from.getY() && o.b.getX() == to.getX() && o.b.getY() == to.getY()) ||
+                    (o.a.getX() == to.getX() && o.a.getY() == to.getY() && o.b.getX() == from.getX() && o.b.getY() == from.getY()))
+                return true;
+
+        }
+        return false;
+
     }
 }
